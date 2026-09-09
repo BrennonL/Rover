@@ -15,11 +15,12 @@ void delay_ms(int ms) {
 }
 
 int main() {
+  DDRB |= (1 << PB5);
   while (true) {
     led_on();
-    delay_ms(3000000);
+    delay_ms(500);
     led_off();
-    delay_ms(3000000);
+    delay_ms(500);
   }
   return 0;
 }
