@@ -5,7 +5,7 @@ class Sensors
 {
 public:
     // Constructor
-    Sensors();
+    Sensors(uint8_t inputBit, uint8_t outputBit);
 
     // Rule of 5
     ~Sensors();

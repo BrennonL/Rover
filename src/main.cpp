@@ -16,6 +16,11 @@ void delay_ms(int ms) {
 
 int main() {
   DDRB |= (1 << PB5);
+
+  DDRB |= (1 << PB3); // Arduino output to sensor
+  DDRB |= (1 << PB2); // Arduino input from sensor
+
+  // MAIN LOOP 
   while (true) {
     led_on();
     delay_ms(500);

@@ -1,9 +1,13 @@
 // ChatGPT generated file structure but I implemented function logic
 #include "sensors.h"
+#include <avr/io.h>
 
-Sensors::Sensors()
+Sensors::Sensors(uint8_t inputBit, uint8_t outputBit)
 {
-    // TODO: Initialize member variables
+  // TODO: Initialize member variables
+  // Set up sensor input and output
+  DDRB |= (1 << inputBit);
+  DDRB |= (1 << outputBit);
 }
 
 Sensors::~Sensors()
