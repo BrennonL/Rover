@@ -1,8 +1,11 @@
 // ChatGPT generated file structure but I implemented function logic
 #include "sensors.h"
 #include <avr/io.h>
+#include <stdint.h>
+#include<utilities.h>
 
-Sensors::Sensors(uint8_t inputBit, uint8_t outputBit)
+// Sensors::Sensors()
+Sensors::Sensors(uint8_t inputBit, uint8_t outputBit):_inputBit(inputBit), _outputBit(outputBit)
 {
   // TODO: Initialize member variables
   // Set up sensor input and output
@@ -12,13 +15,13 @@ Sensors::Sensors(uint8_t inputBit, uint8_t outputBit)
 
 Sensors::~Sensors()
 {
-    // TODO: Clean up resources if necessary
+  // TODO: Clean up resources if necessary
 }
 
 // Copy constructor
 Sensors::Sensors(const Sensors& other)
 {
-    // TODO: Copy data from other
+  // TODO: Copy data from other
 }
 
 // Copy assignment operator
@@ -56,9 +59,16 @@ void Sensors::begin()
 
 float Sensors::getDistance()
 {
-    // TODO: Trigger HC-SR04 and calculate distance
 
-    return 0.0f;
+    // TODO: Trigger HC-SR04 and calculate distance
+  // Send sensing signal to HC-SR04
+  PORTB |= (1 << this->_outputBit);
+  delay_us(10);
+  PORTB &= ~(1 << this->_outputBit);
+
+  // Read duration of sense signal
+
+  return 0.0f;
 }
 
 bool Sensors::isValid()

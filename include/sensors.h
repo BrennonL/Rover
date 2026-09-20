@@ -1,11 +1,15 @@
 #ifndef SENSORS_H
 #define SENSORS_H
 
+#include<stdint.h>
+
 class Sensors
 {
 public:
     // Constructor
     Sensors(uint8_t inputBit, uint8_t outputBit);
+    // Sensors();
+
 
     // Rule of 5
     ~Sensors();
@@ -23,6 +27,8 @@ public:
 
 private:
     float _distance;
+    int _inputBit;
+    int _outputBit;
 };
 
 #endif
