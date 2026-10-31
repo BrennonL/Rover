@@ -1,23 +1,12 @@
 #include <avr/io.h>
 #include <util/delay.h>
+#include <utilities.h>
 
 void led_on() {
   PORTB |= (1<<PB5);
 }
 void led_off() {
   PORTB &= ~(1<<PB5);
-}
-
-void delay_us(int us) {
-  while (us --) {
-    _delay_us(1);
-  }
-}
-
-void delay_ms(int ms) {
-  while (ms --) {
-    _delay_ms(1);
-  }
 }
 
 void sense() {
@@ -28,6 +17,7 @@ void sense() {
   PORTB |= (1 << PB3);
   delay_us(10);
   PORTB &= ~(1 << PB3);
+  
   int duration;
   while (PINB & (1 << PB2)){
     duration ++;
@@ -48,6 +38,7 @@ int main() {
   // MAIN LOOP 
   while (true) {
     sense();
+    // led_off();
 
     // led_on();
     // delay_ms(500);
