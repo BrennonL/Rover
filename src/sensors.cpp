@@ -7,6 +7,8 @@
 // Sensors::Sensors()
 Sensors::Sensors(uint8_t inputBit, uint8_t outputBit):_inputBit(inputBit), _outputBit(outputBit)
 {
+  // inputBit is Arduino -> Sensor
+  // outputBit is Seneor -> Arduino
   // TODO: Initialize member variables
   // Set up sensor input and output
   DDRB |= (1 << inputBit);
@@ -67,7 +69,7 @@ float Sensors::getDistance()
   PORTB &= ~(1 << this->_outputBit);
 
   // Read duration of sense signal
-
+  
   return 0.0f;
 }
 

@@ -18,14 +18,29 @@ void sense() {
   delay_us(10);
   PORTB &= ~(1 << PB3);
   
-  int duration;
-  while (PINB & (1 << PB2)){
-    duration ++;
+  int duration = 0;
+  // while (PINB & (1 << PB2)){
+  //   // if (duration >= 1000) {
+  //   //   led_off();
+  //   // } else {
+  //   //   led_on();
+  //   // }
+  //   led_off();
+  //   duration ++;
+  // }
+
+  if (PINB & (1 << PB2)) {
+    led_off();
+  } else {
+    led_on();
   }
-  led_on();
-  delay_ms(duration);
-  led_off();
-  delay_ms(10);
+  // led_off();
+  // led_on();
+  // duration = 0;
+  // led_on();
+  // delay_ms(10);
+  // led_off();
+  // delay_ms(10);
 
 }
 
@@ -35,15 +50,8 @@ int main() {
   DDRB |= (1 << PB3); // Arduino output to sensor
   DDRB &= ~(1 << PB2); // Arduino input from sensor
 
-  // MAIN LOOP 
   while (true) {
     sense();
-    // led_off();
-
-    // led_on();
-    // delay_ms(500);
-    // led_off();
-    // delay_ms(500);
   }
   return 0;
 }
