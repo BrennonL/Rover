@@ -14,33 +14,18 @@ void sense() {
   // PORTB &= ~(1 << PB3);
 
   // Send sensor logic
-  PORTB |= (1 << PB3);
+  PORTB |= (1 << PB3); // HIGH signal
   delay_us(10);
-  PORTB &= ~(1 << PB3);
-  
-  int duration = 0;
-  // while (PINB & (1 << PB2)){
-  //   // if (duration >= 1000) {
-  //   //   led_off();
-  //   // } else {
-  //   //   led_on();
-  //   // }
-  //   led_off();
-  //   duration ++;
-  // }
+  PORTB &= ~(1 << PB3); // LOW signal
 
-  if (PINB & (1 << PB2)) {
+  // Measure duration: https://forum.arduino.cc/t/pulsein-function-source-code/102995 
+  
+
+  if (PINB & (1 << PB2)) { 
     led_off();
   } else {
     led_on();
   }
-  // led_off();
-  // led_on();
-  // duration = 0;
-  // led_on();
-  // delay_ms(10);
-  // led_off();
-  // delay_ms(10);
 
 }
 
