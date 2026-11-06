@@ -1,30 +1,22 @@
 #include <avr/io.h>
 #include <util/delay.h>
-#include <utilities.h> // delay_us, sendHigh, sendLOW
+#include <utilities.h> // delay_us, sendHigh, sendLOW, delay_ms
 #include <stdint.h>
 
-void led_on() {
-  PORTB |= (1<<PB5);
-}
-void led_off() {
-  PORTB &= ~(1<<PB5);
-}
+// TODO -- move these to utilities 
+
+
 
 void sense() {
-
+  // TODO -- Move this function to the sensor class
+  // Attribution: https://github.com/attar2580/HC-SR04_atmega32_Driver/blob/main/ultrasonic.c
+  uint16_t distance;
   PORTB &= ~(1 << PB3); // reset sensor to low.
 
   // Trigger sense
   PORTB |= (1 << PB3); // send HIGH
   delay_us(10);
   PORTB &= ~(1 << PB3); // send LOW
-  led_off();
-  // Wait for echo to start
-  if (!(PINB & (1 << PB2))) {
-    led_on();
-  } else {
-    led_off();
-  }
 
   // Start timer measurements
   TCNT1 = 0; // Set the timer to 0
@@ -39,8 +31,23 @@ void sense() {
 
   // Stop timer and calculate distance
   TCCR1B = 0; // top the timer
+  uint16_t ticks = TCNT1; // Read number of ticks
+  if (ticks > 3000) distance = 400; // If ticks exceed maximum return max disctance
+	/* Calculation:
+	   Speed of sound = 343m/s = 0.0343 cm/us
+	   Time = Ticks * 0.5us
+	   Distance = (Time * Speed) / 2 (Round trip)
+	   Distance = (Ticks * 0.5 * 0.0343) / 2
+	   Distance = Ticks / 116.6
+	   Used 117 for integer division accuracy. */
+  else distance = ticks / 117; // Otherwise calculate disctance
 
-
+  for (uint8_t i = 0; distance > i; i++) {
+    led_on();
+    delay_ms(50);
+    led_off();
+    delay_ms(50);
+  }
 }
 
 int main() {

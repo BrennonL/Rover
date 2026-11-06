@@ -1,14 +1,17 @@
 #ifndef UTILITIES
 #define UTILITIES
-
-# include <util/delay.h>
+#include <stdint.h>
 
 void delay_ms(int ms);
 
 void delay_us(int us);
 
-void sendHIGHT();
+void sendHIGH(uint8_t pinBit);
 
-void sendLOW();
+void sendLOW(uint8_t pinBit);
+
+void led_on();
+
+void led_off();
 
 #endif
