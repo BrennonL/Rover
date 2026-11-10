@@ -14,4 +14,6 @@ void led_on();
 
 void led_off();
 
+void flash_count(uint16_t number);
+
 #endif

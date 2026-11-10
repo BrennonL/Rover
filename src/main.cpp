@@ -3,8 +3,6 @@
 #include <utilities.h> // delay_us, sendHigh, sendLOW, delay_ms
 #include <stdint.h>
 
-// TODO -- move these to utilities 
-
 
 
 void sense() {
@@ -42,12 +40,9 @@ void sense() {
 	   Used 117 for integer division accuracy. */
   else distance = ticks / 117; // Otherwise calculate disctance
 
-  for (uint8_t i = 0; distance > i; i++) {
-    led_on();
-    delay_ms(50);
-    led_off();
-    delay_ms(50);
-  }
+  // distance = 10;
+  flash_count(distance);
+  delay_ms(5000);
 }
 
 int main() {
