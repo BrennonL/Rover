@@ -21,13 +21,16 @@ void sense() {
   TCCR1B = (1 << CS11); // Start the timer. Remember 1 tick = 0.5 microseconds
 
   // Wait for echo to start
-  uint8_t timeout = 40000;
+  uint8_t timeout = 30000;
   // A while loop while the signal is high, breaks when timeout or low
   while (!(PINB & (1 << PB2))) {
     if (-- timeout == 0) break;
+    // led_on();
   }
+  // led_off();
 
   // Stop timer and calculate distance
+  // TCCR1A = 0;
   TCCR1B = 0; // top the timer
   uint16_t ticks = TCNT1; // Read number of ticks
   if (ticks > 3000) distance = 400; // If ticks exceed maximum return max disctance
@@ -41,8 +44,17 @@ void sense() {
   else distance = ticks / 117; // Otherwise calculate disctance
 
   // distance = 10;
-  flash_count(distance);
-  delay_ms(5000);
+  // flash_count(distance);
+  // delay_ms(5000);
+  if (ticks > 20) {
+    led_on();
+    delay_ms(1000);
+    led_off();
+  } else {
+    led_off();
+    delay_ms(1000);
+
+  }
 }
 
 int main() {
