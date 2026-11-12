@@ -118,16 +118,8 @@ void sense() {
   // distance = 10;
   // flash_count(distance);
   // delay_ms(5000);
-  printf("Hello World");
-  if (ticks > 20) {
-    led_on();
-    delay_ms(1000);
-    led_off();
-  } else {
-    led_off();
-    delay_ms(1000);
-
-  }
+  // printf("Hello World");
+  printf("ticks == %d", ticks);
 }
 
 int main() {
@@ -135,13 +127,13 @@ int main() {
 
   DDRB |= (1 << PB3); // Arduino output to sensor
   DDRB &= ~(1 << PB2); // Arduino input from sensor
-
-  // while (true) {
-  //   sense();
-  // }
   uart_init();
   stdout = &uart_out;
   sei();
-  printf("Hello World");
+
+  while (true) {
+    sense();
+  }
+  // printf("Hello World");
   return 0;
 }
