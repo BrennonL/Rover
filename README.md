@@ -18,5 +18,13 @@ If it runs with no errors then you can push the code to the arduino with:
 pio run -t upload
 ```
 
+
+For debugging purposes, the function `printf()` will display to the terminal 
+after running 
+
+```bash
+pio device monitor -f time
+```
+
 # Purpose
 # Results

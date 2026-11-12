@@ -1,3 +1,7 @@
+/**
+ * Source: https://projectslearner.com/avr-microcontroller/usart-serial-communication
+ */
+
 #define F_CPU 16000000UL
 #define BAUD 9600UL
 
