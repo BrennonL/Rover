@@ -1,9 +1,9 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <utilities.h> // delay_us, sendHigh, sendLOW, delay_ms
-#include <stdint.h>
-
-
+#include <stdint.h> // unit16_t, utin8_t, unit32_t
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 void sense() {
   // TODO -- Move this function to the sensor class
@@ -46,6 +46,7 @@ void sense() {
   // distance = 10;
   // flash_count(distance);
   // delay_ms(5000);
+  // printf("Hello World");
   if (ticks > 20) {
     led_on();
     delay_ms(1000);
