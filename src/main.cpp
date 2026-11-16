@@ -77,29 +77,42 @@ static int uart_getc(void)
     return c;
 }
 
-void sense() {
+uint16_t sense() {
   // TODO -- Move this function to the sensor class
   // Attribution: https://github.com/attar2580/HC-SR04_atmega32_Driver/blob/main/ultrasonic.c
+
   uint16_t distance;
   PORTB &= ~(1 << PB3); // reset sensor to low.
-
-  // Trigger sense
+  
+  // STEP 1: send trigger pulse
   PORTB |= (1 << PB3); // send HIGH
-  delay_us(10);
+  delay_us(15);
   PORTB &= ~(1 << PB3); // send LOW
 
-  // Start timer measurements
+  // STEP 2: Select input register
+  // ! Already did this in main
+
+  // STEP 3: Wait for echo to start
+  uint8_t timeout = 40000;
+  // A while loop while the signal is high, breaks when timeout or low
+  while (!(PINB & (1 << PB2))) {
+    if (-- timeout == 0) {
+      // break;
+      printf("TIMEOUT REACHED \n");
+      return 0;
+    }
+    // led_on();
+  }
+  
+  // STEP 4: Start timer
   TCNT1 = 0; // Set the timer to 0
   TCCR1B = (1 << CS11); // Start the timer. Remember 1 tick = 0.5 microseconds
 
-  // Wait for echo to start
-  uint8_t timeout = 30000;
-  // A while loop while the signal is high, breaks when timeout or low
-  while (!(PINB & (1 << PB2))) {
-    if (-- timeout == 0) break;
-    // led_on();
+  // STEP 5: Wait for the eco to end
+  timeout = 30000;
+  while ((PINB & (1 << PB2))) {
+    if (--timeout == 0) break;
   }
-  // led_off();
 
   // Stop timer and calculate distance
   // TCCR1A = 0;
@@ -119,7 +132,8 @@ void sense() {
   // flash_count(distance);
   // delay_ms(5000);
   // printf("Hello World");
-  printf("ticks == %d", ticks);
+  printf("ticks == %d \n", ticks);
+  return ticks;
 }
 
 int main() {
