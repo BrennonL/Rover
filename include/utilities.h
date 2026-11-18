@@ -1,5 +1,4 @@
-#ifndef UTILITIES
-#define UTILITIES
+#pragma once
 #include <stdint.h>
 
 void delay_ms(int ms);
@@ -10,10 +9,8 @@ void sendHIGH(uint8_t pinBit);
 
 void sendLOW(uint8_t pinBit);
 
-void led_on();
+void ledOn();
 
-void led_off();
+void ledOff();
 
-void flash_count(uint16_t number);
-
-#endif
+void flashCount(uint16_t number);

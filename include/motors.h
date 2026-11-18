@@ -1,7 +1,6 @@
 // CHATGPT generated the class boilerplate
 
-#ifndef MOTORS_H
-#define MOTORS_H
+#pragma once
 
 class Motors
 {
@@ -28,5 +27,3 @@ public:
 private:
     int _speed;
 };
-
-#endif

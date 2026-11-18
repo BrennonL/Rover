@@ -1,7 +1,6 @@
 // Brennon Laney wrote this by hand
 // States: stop, go, turn left, turn right.
-#ifndef STATEMACHINE_H;
-#define STATEMACHINE_H;
+#pragma once
 
 enum state {
   Forward = 0,
@@ -25,5 +24,3 @@ class StateMachine {
 
   private: 
 };
-
-#endif

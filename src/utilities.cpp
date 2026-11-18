@@ -43,14 +43,14 @@ void sendLOW(uint8_t pinBit) {
 /**
  * Turns the built-in led on the Arduino (port B pin 5)
  */
-void led_on() {
+void ledOn() {
   PORTB |= (1<<PB5);
 }
 
 /**
  * Turns the built-in led off on the Arduino (port B pin 5)
  */
-void led_off() {
+void ledOff() {
   PORTB &= ~(1<<PB5);
 }
 
@@ -59,12 +59,12 @@ void led_off() {
  * 
  * @param number: The number of times the light flashes
  */
-void flash_count(uint16_t number) {
-  led_off();
+void flashCount(uint16_t number) {
+  ledOff();
   for (int i = 0; i < number; i++) {
-    led_on();
+    ledOn();
     delay_ms(50);
-    led_off();
+    ledOff();
     delay_ms(50);
   }
 }

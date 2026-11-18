@@ -83,20 +83,23 @@ uint16_t sense() {
 
   uint16_t distance;
   PORTB &= ~(1 << PB3); // reset sensor to low.
+  sendLOW(PB3);
   
   // STEP 1: send trigger pulse
-  PORTB |= (1 << PB3); // send HIGH
-  delay_us(15);
-  PORTB &= ~(1 << PB3); // send LOW
+  // PORTB |= (1 << PB3); // send HIGH
+  sendHIGH(PB3);
+  delay_us(10);
+  // PORTB &= ~(1 << PB3); // send LOW
+  sendLOW(PB3);
 
   // STEP 2: Select input register
   // ! Already did this in main
 
   // STEP 3: Wait for echo to start
   uint8_t timeout = 40000;
-  // A while loop while the signal is high, breaks when timeout or low
+  // A while loop while the signal is LOW, breaks when timeout or HIGH
   while (!(PINB & (1 << PB2))) {
-    if (-- timeout == 0) {
+    if (--timeout == 0) {
       // break;
       printf("TIMEOUT REACHED \n");
       return 0;

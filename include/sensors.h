@@ -1,5 +1,4 @@
-#ifndef SENSORS_H
-#define SENSORS_H
+#pragma once
 
 #include<stdint.h>
 
@@ -27,8 +26,6 @@ public:
 
 private:
     float _distance;
-    int _inputBit;
-    int _outputBit;
+    int _triggerBit;
+    int _echoBit;
 };
-
-#endif

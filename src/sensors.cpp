@@ -2,10 +2,10 @@
 #include "sensors.h"
 #include <avr/io.h>
 #include <stdint.h>
-#include<utilities.h>
+#include<utilities.h> // delay_us, sendHIGH, sendLOW
 
 // Sensors::Sensors()
-Sensors::Sensors(uint8_t inputBit, uint8_t outputBit):_inputBit(inputBit), _outputBit(outputBit)
+Sensors::Sensors(uint8_t inputBit, uint8_t outputBit):_triggerBit(inputBit), _echoBit(outputBit)
 {
   // inputBit is Arduino -> Sensor
   // outputBit is Seneor -> Arduino
@@ -64,9 +64,12 @@ float Sensors::getDistance()
 
     // TODO: Trigger HC-SR04 and calculate distance
   // Send sensing signal to HC-SR04
-  PORTB |= (1 << this->_outputBit);
+  // PORTB |= (1 << this->_outputBit);
+  sendHIGH(this->_triggerBit);
   delay_us(10);
-  PORTB &= ~(1 << this->_outputBit);
+  sendLOW(this->_triggerBit);
+
+  // Select input register
 
   // Read duration of sense signal
   
