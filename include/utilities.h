@@ -14,3 +14,9 @@ void ledOn();
 void ledOff();
 
 void flashCount(uint16_t number);
+
+void startTimer1();
+
+void stopTimer1();
+
+uint16_t getTimer1Ticks();

@@ -68,3 +68,26 @@ void flashCount(uint16_t number) {
     delay_ms(50);
   }
 }
+
+/**
+ * Starts timer 1 on the ATMEGA328P
+ */
+void startTimer1() {
+  TCNT1 = 0;
+  TCCR1B = (1 << CS11);
+}
+
+/**
+ * Stops timer 1 on the ATMEGA328P
+ */
+void stopTimer1() {
+  TCCR1B = 0;
+}
+
+/**
+ * Gets the number of ticks stored in the timer 1 on ATMEGA328P
+ */
+uint16_t getTimer1Ticks() {
+  uint16_t ticks = TCNT1;
+  return ticks;
+}

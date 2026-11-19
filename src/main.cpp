@@ -77,6 +77,16 @@ static int uart_getc(void)
     return c;
 }
 
+void count(uint8_t duration) {
+  startTimer1();
+  for (size_t i = 0; i < duration; i++) {
+    delay_us(10);
+  }
+  stopTimer1();
+  uint16_t ticks = getTimer1Ticks();
+  printf("ticks == %d\n", ticks);
+}
+
 uint16_t sense() {
   // TODO -- Move this function to the sensor class
   // Attribution: https://github.com/attar2580/HC-SR04_atmega32_Driver/blob/main/ultrasonic.c
@@ -108,8 +118,9 @@ uint16_t sense() {
   }
   
   // STEP 4: Start timer
-  TCNT1 = 0; // Set the timer to 0
-  TCCR1B = (1 << CS11); // Start the timer. Remember 1 tick = 0.5 microseconds
+  // TCNT1 = 0; // Set the timer to 0
+  // TCCR1B = (1 << CS11); // Start the timer. Remember 1 tick = 0.5 microseconds
+  startTimer1();
 
   // STEP 5: Wait for the eco to end
   timeout = 30000;
@@ -119,8 +130,9 @@ uint16_t sense() {
 
   // Stop timer and calculate distance
   // TCCR1A = 0;
-  TCCR1B = 0; // top the timer
-  uint16_t ticks = TCNT1; // Read number of ticks
+  // TCCR1B = 0; // top the timer
+  stopTimer1();
+  uint16_t ticks = getTimer1Ticks(); // Read number of ticks
   if (ticks > 3000) distance = 400; // If ticks exceed maximum return max disctance
 	/* Calculation:
 	   Speed of sound = 343m/s = 0.0343 cm/us
@@ -151,6 +163,13 @@ int main() {
   while (true) {
     sense();
   }
+  // count(1);
+  // count(5);
+  // count(9);
+  // count(7);
+  // count(6);
+  // count(12);
+
   // printf("Hello World");
   return 0;
 }
