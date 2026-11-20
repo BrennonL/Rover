@@ -106,9 +106,9 @@ uint16_t sense() {
   // ! Already did this in main
 
   // STEP 3: Wait for echo to start
-  uint8_t timeout = 40000;
+  uint16_t timeout = 40000;
   // A while loop while the signal is LOW, breaks when timeout or HIGH
-  while (!(PINB & (1 << PB2))) {
+  while ((PINB & (1 << PB2))) {
     if (--timeout == 0) {
       // break;
       printf("TIMEOUT REACHED \n");
@@ -118,19 +118,15 @@ uint16_t sense() {
   }
   
   // STEP 4: Start timer
-  // TCNT1 = 0; // Set the timer to 0
-  // TCCR1B = (1 << CS11); // Start the timer. Remember 1 tick = 0.5 microseconds
   startTimer1();
 
   // STEP 5: Wait for the eco to end
   timeout = 30000;
-  while ((PINB & (1 << PB2))) {
+  while (!(PINB & (1 << PB2))) {
     if (--timeout == 0) break;
   }
 
   // Stop timer and calculate distance
-  // TCCR1A = 0;
-  // TCCR1B = 0; // top the timer
   stopTimer1();
   uint16_t ticks = getTimer1Ticks(); // Read number of ticks
   if (ticks > 3000) distance = 400; // If ticks exceed maximum return max disctance

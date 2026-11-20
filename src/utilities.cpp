@@ -2,6 +2,8 @@
 #include<util/delay.h>
 #include <avr/io.h>
 #include <stdint.h>
+#include<avr/io.h>
+#include<stdio.h> // size_t
 
 /**
  * Delay specifed number of milliseconds
@@ -61,7 +63,7 @@ void ledOff() {
  */
 void flashCount(uint16_t number) {
   ledOff();
-  for (int i = 0; i < number; i++) {
+  for (size_t i = 0; i < number; i++) {
     ledOn();
     delay_ms(50);
     ledOff();
@@ -70,17 +72,19 @@ void flashCount(uint16_t number) {
 }
 
 /**
- * Starts timer 1 on the ATMEGA328P
+ * Starts timer 1 on the ATMEGA328P. Remember 1 tick = 0.5 microseconds
  */
 void startTimer1() {
-  TCNT1 = 0;
-  TCCR1B = (1 << CS11);
+  // TODO -- What if timer was already started?
+  TCNT1 = 0; // set timer1 register to 0
+  TCCR1B = (1 << CS11);  // Start the timer.
 }
 
 /**
  * Stops timer 1 on the ATMEGA328P
  */
 void stopTimer1() {
+  // TODO -- What if timer was already stopped?
   TCCR1B = 0;
 }
 
