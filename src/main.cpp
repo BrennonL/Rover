@@ -9,6 +9,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include "sensors.h"
+
 // Solution to FDEV_SETUP_STREAM not working on C++
 // url: https://github.com/avrdudes/avr-libc/issues/898
 #undef FDEV_SETUP_STREAM
@@ -77,95 +79,17 @@ static int uart_getc(void)
     return c;
 }
 
-void count(uint8_t duration) {
-  startTimer1();
-  for (size_t i = 0; i < duration; i++) {
-    delay_us(10);
-  }
-  stopTimer1();
-  uint16_t ticks = getTimer1Ticks();
-  printf("ticks == %d\n", ticks);
-}
-
-uint16_t sense() {
-  // TODO -- Move this function to the sensor class
-  // Attribution: https://github.com/attar2580/HC-SR04_atmega32_Driver/blob/main/ultrasonic.c
-
-  uint16_t distance;
-  PORTB &= ~(1 << PB3); // reset sensor to low.
-  sendLOW(PB3);
-  
-  // STEP 1: send trigger pulse
-  // PORTB |= (1 << PB3); // send HIGH
-  sendHIGH(PB3);
-  delay_us(10);
-  // PORTB &= ~(1 << PB3); // send LOW
-  sendLOW(PB3);
-
-  // STEP 2: Select input register
-  // ! Already did this in main
-
-  // STEP 3: Wait for echo to start
-  uint16_t timeout = 40000;
-  // A while loop while the signal is LOW, breaks when timeout or HIGH
-  while ((PINB & (1 << PB2))) {
-    if (--timeout == 0) {
-      // break;
-      printf("TIMEOUT REACHED \n");
-      return 0;
-    }
-    // led_on();
-  }
-  
-  // STEP 4: Start timer
-  startTimer1();
-
-  // STEP 5: Wait for the eco to end
-  timeout = 30000;
-  while (!(PINB & (1 << PB2))) {
-    if (--timeout == 0) break;
-  }
-
-  // Stop timer and calculate distance
-  stopTimer1();
-  uint16_t ticks = getTimer1Ticks(); // Read number of ticks
-  if (ticks > 3000) distance = 400; // If ticks exceed maximum return max disctance
-	/* Calculation:
-	   Speed of sound = 343m/s = 0.0343 cm/us
-	   Time = Ticks * 0.5us
-	   Distance = (Time * Speed) / 2 (Round trip)
-	   Distance = (Ticks * 0.5 * 0.0343) / 2
-	   Distance = Ticks / 116.6
-	   Used 117 for integer division accuracy. */
-  else distance = ticks / 117; // Otherwise calculate disctance
-
-  // distance = 10;
-  // flash_count(distance);
-  // delay_ms(5000);
-  // printf("Hello World");
-  printf("ticks == %d \n", ticks);
-  return ticks;
-}
-
 int main() {
-  DDRB |= (1 << PB5); // Arduino output to light
-
-  DDRB |= (1 << PB3); // Arduino output to sensor
-  DDRB &= ~(1 << PB2); // Arduino input from sensor
   uart_init();
   stdout = &uart_out;
   sei();
 
-  while (true) {
-    sense();
-  }
-  // count(1);
-  // count(5);
-  // count(9);
-  // count(7);
-  // count(6);
-  // count(12);
+  Sensors sensor(PB3, PB2);
 
-  // printf("Hello World");
+  while (true) {
+    // sense();
+    uint16_t distance = sensor.getDistance();
+    printf("distance ==  %d \n", distance);
+  }
   return 0;
 }

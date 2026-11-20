@@ -20,7 +20,7 @@ public:
     // Sensor interface
     void begin();
 
-    float getDistance();
+    uint16_t getDistance();
 
     bool isValid();
 
