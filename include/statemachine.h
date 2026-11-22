@@ -3,10 +3,12 @@
 #pragma once
 
 enum state {
-  Forward = 0,
-  Right = 1,
-  Left = 2,
-  LowPower = 3, // I might want this somewhere else
+  FORWARD,
+  RIGHT,
+  LEFT,
+  LOWPOWER, // I might want this somewhere else
+  BACKWARDS,
+  STATIONARY, // Hold for a few seconds and then move forward once button is pushed
 };
 
 class StateMachine {
@@ -20,7 +22,8 @@ class StateMachine {
     StateMachine& operator=(StateMachine&& other) noexcept;
 
     state getState();
-    void changeState();
+    void changeState(state newState);
 
   private: 
+    state currState;
 };
