@@ -75,8 +75,11 @@ void flashCount(uint16_t number) {
  * Starts timer 1 on the ATMEGA328P. Remember 1 tick = 0.5 microseconds
  */
 void startTimer1() {
-  // TODO -- What if timer was already started?
   TCNT1 = 0; // set timer1 register to 0
+  if (TCCR1B == (1 << CS11)) { // verify timer wasn't already started
+    printf("timer already started");
+    return;
+  }
   TCCR1B = (1 << CS11);  // Start the timer.
 }
 

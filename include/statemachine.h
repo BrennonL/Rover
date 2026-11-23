@@ -1,6 +1,8 @@
 // Brennon Laney wrote this by hand
 // States: stop, go, turn left, turn right.
 #pragma once
+#include <stdint.h> 
+
 
 enum state {
   FORWARD,
@@ -9,6 +11,16 @@ enum state {
   LOWPOWER, // I might want this somewhere else
   BACKWARDS,
   STATIONARY, // Hold for a few seconds and then move forward once button is pushed
+};
+
+/**
+ * The idea behind this structure is to pass it into the state machine it and
+ * it would use it to determine if the class is able to change states or not
+ * depending on the data stored on .statemachineconfig.toml file
+ */
+struct carState {
+  uint16_t distance;
+  // int power;
 };
 
 class StateMachine {

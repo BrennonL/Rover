@@ -9,11 +9,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "Serial.h"
+#include "serial.h"
 #include "sensors.h"
 
 int main() {
-  printfSetup(); 
+  printfSetup();
   Sensors sensor(PB3, PB2);
   printf("Hello World");
   while (true) {

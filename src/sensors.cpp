@@ -85,7 +85,7 @@ uint16_t Sensors::getDistance()
   while(!(PINB & (1 << this->_echoBit))) {
     if (--timeout <= 0) {
       printf("IS IT SIMPLY GETTING HERE?");
-      return 0; //! This might create some problems, figure out what else I should return other than 0 cm
+      return 0;
     }
   }
 

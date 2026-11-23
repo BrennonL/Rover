@@ -2,6 +2,7 @@
 
 
 StateMachine::StateMachine() {
+  // TODO -- Add configuration file and state changing logic
   currState = STATIONARY;
 }
 StateMachine::~StateMachine() {}

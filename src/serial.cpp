@@ -5,7 +5,7 @@
 #define F_CPU 16000000UL
 #define BAUD 9600UL
 
-#include <Serial.h>
+#include "serial.h"
 
 #include <stdint.h> // unit16_t, utin8_t, unit32_t
 #include <stdio.h>
