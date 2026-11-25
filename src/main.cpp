@@ -5,7 +5,7 @@
 #include <util/delay.h>
 #include <utilities.h> // delay_us, sendHigh, sendLOW, delay_ms
 #include <stdint.h> // unit16_t, utin8_t, unit32_t
-#include <stdio.h> // FDEV_SETUP_STREAM
+#include <stdio.h> // FDEV_SETUP_STREAM, printf
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -16,6 +16,7 @@ int main() {
   printfSetup();
   Sensors sensor(PB3, PB2);
   printf("Hello World");
+
   while (true) {
     uint16_t distance = sensor.getDistance();
     printf("distance ==  %d \n", distance);

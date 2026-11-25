@@ -1,8 +1,8 @@
 // Brennon Laney wrote this by hand
 // States: stop, go, turn left, turn right.
 #pragma once
+
 #include <stdint.h> 
-#include <ArduinoJson.h>
 
 enum state {
   FORWARD,
@@ -34,7 +34,7 @@ class StateMachine {
     StateMachine& operator=(StateMachine&& other) noexcept;
 
     state getState();
-    void changeState(state newState);
+    void changeState(carState& state);
 
   private: 
     state currState;

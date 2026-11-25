@@ -1,8 +1,0 @@
-{
-  "sensors": {
-    "minDistanceCm": 10
-  },
-  "motors": {
-    "speed": 0
-  }
-}
