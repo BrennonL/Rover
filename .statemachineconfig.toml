@@ -1,5 +1,0 @@
-[Sensors]
-minDistanceCm = 10
-
-[Motors]
-speed = 0

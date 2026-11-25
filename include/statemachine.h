@@ -2,7 +2,7 @@
 // States: stop, go, turn left, turn right.
 #pragma once
 #include <stdint.h> 
-
+#include <ArduinoJson.h>
 
 enum state {
   FORWARD,
