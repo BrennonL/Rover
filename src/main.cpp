@@ -11,6 +11,7 @@
 
 #include "serial.h"
 #include "sensors.h"
+#include "statemachine.h"
 
 int main() {
   printfSetup();
@@ -18,8 +19,11 @@ int main() {
   printf("Hello World");
 
   while (true) {
-    uint16_t distance = sensor.getDistance();
-    printf("distance ==  %d \n", distance);
+    carState thisRover;
+    StateMachine thisSM;
+    thisRover.distance = sensor.getDistance();
+    printf("distance == %d", thisRover.distance);
+    thisSM.changeState(thisRover);
   }
   return 0;
 }

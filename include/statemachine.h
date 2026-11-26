@@ -21,6 +21,8 @@ enum state {
 struct carState {
   uint16_t distance;
   // int power;
+  // int speed;
+  // When doing lightR can include other things as well
 };
 
 class StateMachine {
@@ -34,7 +36,7 @@ class StateMachine {
     StateMachine& operator=(StateMachine&& other) noexcept;
 
     state getState();
-    void changeState(carState& state);
+    void changeState(const carState& state);
 
   private: 
     state currState;
